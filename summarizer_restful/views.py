@@ -11,10 +11,10 @@ s = summarizer.Summarizer(
 
 class Summary(generics.GenericAPIView, mixins.CreateModelMixin):
     def post(self, request):
-        data = json.loads(request.body)                             #controllo:  escape sull' " e '
-                                                                    # problemi con l'italiano(lettere accentate):
-                                                                    # 'utf8' codec can't decode byte 0xe8 in position 34: invalid continuation/start byte
-                                                                    # e credo che i riassunti li genereremo su testi in italiano
+        data = json.loads(request.body)  # controllo:  escape sull' " e '
+        # problemi con l'italiano(lettere accentate):
+        # 'utf8' codec can't decode byte 0xe8 in position 34: invalid continuation/start byte
+        # e credo che i riassunti li genereremo su testi in italiano
 
         text = data['text']
         redundancy_threshold = data['redundancy_threshold']
@@ -28,3 +28,8 @@ class Summary(generics.GenericAPIView, mixins.CreateModelMixin):
         to_return = {'summary': summary, 'error': error_msg, 'query_token_error': boolean}
 
         return JsonResponse(to_return)
+
+
+class Hello(generics.GenericAPIView, mixins.CreateModelMixin):
+    def get(self, request):
+        return JsonResponse("Hello world!", safe=False)
